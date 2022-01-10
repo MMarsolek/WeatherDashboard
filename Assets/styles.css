@@ -15,25 +15,24 @@ body{
 
 main{
     display: flex;
-    justify-content: space-evenly;
 }
-.results-container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    width: 80%;
-}
+
 
 .list-group{
     background-color: var(--dark-background);
 }
 .results-container{
     min-height: 15vh;
+    flex: 1 0 auto;
     align-self: center;
     position: relative;
     margin: 0;
     padding: 2px;
+    width: max-content;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
 }
 .card-header{
     background: none;
@@ -101,13 +100,14 @@ li{
 }
 .search-bar{
     display: flex;
-    flex: auto;
+    flex: 0 1 auto;
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: flex-start;
     align-content: flex-start;
     margin: 2px;
 }
+
 .hidden{
     display: none;
 } 

@@ -1,6 +1,5 @@
 var APIKey = '19215b808e4da24575c4df52faa9c71f';
-var city;
-var baseURL = 'http://api.openweathermap.org/data/2.5/';
+var baseURL = 'https://api.openweathermap.org/data/2.5/';
 
 function searchByCity(city) {
     city = $.trim(city);
@@ -65,12 +64,25 @@ function addListOfSearchedCities(){
     listGroup.empty();
     if(listOfCities){
         for (var i = 0; i< listOfCities.length; i++) {
-            $('<li><button>' + 
-            listOfCities[i] + '</button></li>').addClass("list-group-item list-group-item-action").attr('id', listOfCities[i]).appendTo(listGroup);
-
-            $('#'+listOfCities[i]).click(function(event){searchByCity(this.id)});
+            var city = listOfCities[i]
+            $('<li><button>' + city + '</button></li>').addClass("list-group-item list-group-item-action").attr('id',sanitizeString(city)).appendTo(listGroup);
+            city = sanitizeString(city);
+            $('#'+city).click(function(event){                
+                searchByCity(sanitizeString(this.id))
+            });
         }
     }
+}
+
+function sanitizeString(string){
+
+    if (string.indexOf(' ') >= 0) {
+        string = string.replace(/\s/g, '_')
+
+    }else {
+        string = string.replace(/_/g, ' ')
+    }
+    return string;
 }
 
 function checkUVI(uvi){
