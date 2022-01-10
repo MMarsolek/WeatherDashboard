@@ -22,7 +22,7 @@ This site can be used by either going to the [GitHub deployed site](https://mmar
 - In addition to an icon, the current date and displayed location are also shown on the page.
 
 
-![Location, Date, and status are displayed in the main section](Assets/images/icon.PNG)
+![Location, Date, and status are displayed in the main section](Assets/images/Icon.PNG)
 
 
 - A list of previously searched cities is displayed under the search bar for ease of use. 
