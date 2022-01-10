@@ -11,8 +11,8 @@ function searchByCity(city) {
         const curDayObj = data['current'];
         clearDisplays();
 
-        curDayText.siblings('.fas').append('<br>' +  '<p>'+ moment().format('LL') + '</p>');
-        curDayText.siblings('.fas').append('<br>' +  '<p>'+city + '</p>');
+        curDayText.siblings('.fas').append('<br>' +  '<div class="text">'+ moment().format('LL') + '</div>');
+        curDayText.siblings('.fas').append('<br>' +  '<div class="text">'+city + '</div>');
 
         curDayText.append('Temp: '+ curDayObj['curTemp'] + ' °F<br>');
         curDayText.append('Humidity: ' + curDayObj['humidity']+'%<br>');
@@ -29,7 +29,7 @@ function searchByCity(city) {
         for (var i = 0; i < 5; i++){
             const curDayObj = data['forecast'][i];
             const curCard  = $('.future-text').eq(i);
-            curCard.siblings('.fas').append('<br>' + moment(moment().add(i+1, 'days')).format('LL'));
+            curCard.siblings('.fas').append('<br><div class="text"> ' + moment(moment().add(i+1, 'days')).format('LL')+ '</div>');
             curCard.siblings('.fas').append('<p'+ curDayObj['description'] + '</p>');
             curCard.append('<p>Max Temp: '+ curDayObj['maxTemp'] + ' °F</p>');
             curCard.append('<p>Humidity: ' + curDayObj['humidity']+'%</p>');
@@ -50,12 +50,18 @@ function toTitleCase(str) {
 
 function addToLocalStorage(city){
     var listOfSearchedCities = JSON.parse(localStorage.getItem('listOfCities'));
-    if (listOfSearchedCities.includes(city)) {
-        listOfSearchedCities.splice(listOfSearchedCities.indexOf(city), 1);
-        console.log('in if statement')
+    if (listOfSearchedCities){
+        if (listOfSearchedCities.includes(city)) {
+            listOfSearchedCities.splice(listOfSearchedCities.indexOf(city), 1);
+            console.log('in if statement')
+        }
+        listOfSearchedCities.unshift(city);
+        localStorage.setItem('listOfCities', JSON.stringify(listOfSearchedCities));
+    }else{
+        localStorage.setItem('listOfCities', JSON.stringify([city]));
     }
-    listOfSearchedCities.unshift(city);
-    localStorage.setItem('listOfCities', JSON.stringify(listOfSearchedCities));
+
+
 }
 
 function addListOfSearchedCities(){
@@ -75,7 +81,6 @@ function addListOfSearchedCities(){
 }
 
 function sanitizeString(string){
-
     if (string.indexOf(' ') >= 0) {
         string = string.replace(/\s/g, '_')
 
@@ -90,11 +95,11 @@ function checkUVI(uvi){
     if (uvi <= 2 ) {
         uviDisplay.css({"background-color": "green", "border-radius":'5px', "width":'fit-content', 'padding':'2px'});
     }else if (uvi <= 5 ) {
-        uviDisplay.css("background-color", "yellow");
+        uviDisplay.css({"background-color": "yellow", "border-radius":'5px', "width":'fit-content', 'padding':'2px'});
     }else if (uvi <= 7 ) {
-        uviDisplay.css("background-color", "orange");
+        uviDisplay.css({"background-color": "orange", "border-radius":'5px', "width":'fit-content', 'padding':'2px'});
     }else {
-        uviDisplay.css("background-color", "red");
+        uviDisplay.css({"background-color": "red", "border-radius":'5px', "width":'fit-content', 'padding':'2px'});
     }
 }
 

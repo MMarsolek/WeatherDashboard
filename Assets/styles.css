@@ -1,5 +1,5 @@
 :root{
-    --font: Arial, Helvetica, sans-serif;
+    --font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     --border: black solid 1px;
     --dark-background: #093A3E;
     --light-background: #3AAFB9;
@@ -21,19 +21,7 @@ main{
 .list-group{
     background-color: var(--dark-background);
 }
-.results-container{
-    min-height: 15vh;
-    flex: 1 0 auto;
-    align-self: center;
-    position: relative;
-    margin: 0;
-    padding: 2px;
-    width: max-content;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-}
+
 .card-header{
     background: none;
     border: none;
@@ -43,6 +31,12 @@ main{
     align-self: center;
     padding: 0 29%;
     background-color: #f1faee;
+}
+h2{
+    font-size: 1rem;
+    margin: 0;
+    padding: 5px;
+    width: 100%;
 }
 
 .btn:active, button:active{
@@ -55,7 +49,6 @@ main{
 
 .card{
     width: 20%;
-    min-height: 20vh;
     border: var(--border);
     align-items: left;
     background-color: var(--light-background);
@@ -75,10 +68,21 @@ main{
     text-align: center;
 }
 
-.card-header{
+.todays-weather > .card-header{
+    font-size: 5vh;
+    padding: 5px;
     justify-content: space-between;
+ 
+
 }
 
+.text{
+    font-family:var(--font);
+}
+.card-text{
+    padding: 5px;
+    font-style:var(--font);
+}
 button, .list-group-item{
     align-self: left;
     padding: 0;
@@ -105,7 +109,19 @@ li{
     justify-content: flex-start;
     align-items: flex-start;
     align-content: flex-start;
-    margin: 2px;
+    margin: 5px;
+}
+.results-container{
+    min-width: 84vw;
+    flex: 1 0 auto;
+    align-self: flex-end;
+    position: relative;
+    margin: 4px;
+    padding: 2px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .hidden{
