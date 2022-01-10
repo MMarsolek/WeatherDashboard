@@ -8,27 +8,27 @@ This site can be used by either going to the [GitHub deployed site](https://mmar
 - I needed to ensure that the city name that was input was able to be used in the URL and displayed to the user. I accomplished this by creating a function that replaces spaces with a underscore so it could be used in the URL. It also does the reverse so the city can be displayed in a list or used again. 
 
 
-![String sanitization](./Assets/images/stringSanitizer.png)
+![String sanitization](Assets/images/stringSanitizer.PNG)
 
 
 - Given the API constraints, I needed to figure out how I could best get the five day forecast. I ended up making two calls to different API requests. Both use https://api.openweathermap.org/data/2.5/ as the base with different parameters.
 - The box behind the UV Index is colored to show the severity of it.
 
 
-![UVI indicator changes color depending on severity](./Assets/images/UVIndex.png)
+![UVI indicator changes color depending on severity](Assets/images/UVIndex.PNG)
 
 
 - An icon will be displayed depending on the weather forecasted for that day.
 - In addition to an icon, the current date and displayed location are also shown on the page.
 
 
-![Location, Date, and status are displayed in the main section](./Assets/images/icon.png)
+![Location, Date, and status are displayed in the main section](Assets/images/icon.PNG)
 
 
 - A list of previously searched cities is displayed under the search bar for ease of use. 
 
 
-![Recent searches are saved for ease of use](./Assets/images/Searching.png)
+![Recent searches are saved for ease of use](Assets/images/Searching.PNG)
 
 
 
