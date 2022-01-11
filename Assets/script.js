@@ -1,6 +1,8 @@
 var APIKey = '19215b808e4da24575c4df52faa9c71f';
 var baseURL = 'https://api.openweathermap.org/data/2.5/';
 
+
+//Takes the city name or zip code from the user and searches for the weather.
 function searchByCity(city) {
     city = $.trim(city);
     city =toTitleCase(city);
@@ -10,7 +12,7 @@ function searchByCity(city) {
         const curDayText = $('.current-text');
         const curDayObj = data['current'];
         clearDisplays();
-
+//Creates the weather cards with the date, location, icons, and any data.
         curDayText.siblings('.fas').append('<br>' +  '<div class="text">'+ moment().format('LL') + '</div>');
         curDayText.siblings('.fas').append('<br>' +  '<div class="text">'+city + '</div>');
 
@@ -37,17 +39,19 @@ function searchByCity(city) {
             addIcons(curCard.siblings('.fas'), curDayObj['description']);
         }
     }
-    //Add catch for modal?
+    //TODO Add catch for modal?
     );
 } 
 
+
+//Turns the search queries into title case regardless of how they were input
 function toTitleCase(str) {
     return str.replace(/(?:^|\s)\w/g, function(match) {
         return match.toUpperCase();
     });
 }
 
-
+//This function is used to add the searched cities to the localStroage
 function addToLocalStorage(city){
     var listOfSearchedCities = JSON.parse(localStorage.getItem('listOfCities'));
     if (listOfSearchedCities){
@@ -71,15 +75,20 @@ function addListOfSearchedCities(){
     if(listOfCities){
         for (var i = 0; i< listOfCities.length; i++) {
             var city = listOfCities[i]
+            //Creates the button with the city name as the ID by passing it into the sanitizeString function to remove any spaces in the middle of the name
             $('<li><button>' + city + '</button></li>').addClass("list-group-item list-group-item-action").attr('id',sanitizeString(city)).appendTo(listGroup);
             city = sanitizeString(city);
-            $('#'+city).click(function(event){                
+            $('#'+city).click(function(event){     
+                 //When the button is clicked, the ID is taken and passed into the sanitizeString function where and '_' will be replaced with spaces
+                 //It is then passed into the searchByCity function to gather the updated forecast.
                 searchByCity(sanitizeString(this.id))
             });
         }
     }
 }
 
+
+//Sanitizes the city name. This allows the city to be used as the button ID so it can be searched for when the button is clicked/
 function sanitizeString(string){
     if (string.indexOf(' ') >= 0) {
         string = string.replace(/\s/g, '_')
@@ -90,6 +99,8 @@ function sanitizeString(string){
     return string;
 }
 
+
+//Updates the UVI background to corelate to what the severity is.
 function checkUVI(uvi){
     const uviDisplay = $('.uvi');
     if (uvi <= 2 ) {
@@ -103,6 +114,7 @@ function checkUVI(uvi){
     }
 }
 
+//Adds icons based on the contents of the description that is passed in
 function addIcons(day, description){
     if (description.includes('lightening')|| description.includes('thunder')) {
         day.addClass('fa-bolt');
@@ -120,6 +132,8 @@ function addIcons(day, description){
     }
 }
 
+//Uses the city name (or zip code) to get the longitude and latitude by calling the getLongAndLat function and then passes it into getWeatherByLongAndLat to get the 5day forecast
+
 function getWeatherReportByCity(city) {
     return getLongAndLat(city).then(function(data){  
           return getWeatherByLongAndLat(data['lat'], data['long']);
@@ -127,6 +141,8 @@ function getWeatherReportByCity(city) {
     )
 }
 
+
+//uses the city name or zip code to get the longitude and latitude needed to get the five day forecast
 function getLongAndLat(city){
   var getLogLatUrl = encodeURI(baseURL+'/weather?q=' + city + "&appid=" + APIKey);
     return fetch(getLogLatUrl).then(response => response.json()).then(function(data){
@@ -137,11 +153,13 @@ function getLongAndLat(city){
     })
 }
 
+
+//Uses the longitude and latitude to get the 5day forecast
 function getWeatherByLongAndLat(lat, long) {
     var queryURL  = encodeURI(baseURL + 'onecall?lat=' + lat +'&lon='+ long + '&exclude=hourly,minutely&units=imperial&appid=' + APIKey);
     return fetch(queryURL).then(response => response.json()).then(function(data){
         const forecastDays = [];
-
+//Gets the forecast information and adds it to an object
         for (var i = 0; i < 5; i++) {
             const day = data['daily'][i];
             forecastDays.push({
@@ -156,6 +174,7 @@ function getWeatherByLongAndLat(lat, long) {
         }
 
         const currentWeather = data['current'];
+        //Adds the current weather information to the forecast object before returning the object
         return {
             current : {
                 curTemp : currentWeather['temp'],
@@ -172,6 +191,8 @@ function getWeatherByLongAndLat(lat, long) {
     })
 }
 
+
+//Clears the current display to keep from appending things on. 
 function clearDisplays(){
     $('.card-text').empty();
     $('.fas').empty();
@@ -179,16 +200,9 @@ function clearDisplays(){
 
 }
 
-// function setWeatherCard() {
-//     var children=$('.results-container').children();
-//     for(var i=0;i<children.length;i++){
-//         $(children.eq(i)).first().siblings('.fas'));
-//     }
-// }
 
 function main() {
 
-//    setWeatherCard();
    $('.search-button').click(function(){
        searchByCity($('#location-search').val())})
    addListOfSearchedCities();
